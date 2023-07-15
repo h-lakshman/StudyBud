@@ -1,0 +1,10 @@
+<h3>Activity feed</h3>
+{% for message in room_messages %}
+<small><a href="{% url 'user-profile' message.user.id %}">@{{message.user}}</a> {{message.created|timesince}}</small>
+<small>replied to post "{{message.room}}"</small>
+<p>{{message}}</p>
+{% if request.user == message.user%}
+<a href="{% url 'delete-comment' message.id%}">Delete</a>
+{% endif %}
+<hr>
+{% endfor %}
