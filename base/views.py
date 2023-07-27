@@ -1,5 +1,5 @@
 from .models import Room, Topic, Message
-from .forms import RoomForm
+from .forms import RoomForm, UserForm
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -144,3 +144,14 @@ def deleteMessage(request, pk):
         message.delete()
         return redirect('room', pk=temp)
     return render(request, 'base/delete-room.html', {'obj': message})
+
+@login_required(login_url='login')
+def updateUser(request):
+    form = UserForm(instance=request.user)
+    if request.method == 'POST':
+        user = request.user
+        form = UserForm(request.POST,instance=user)
+        if form.is_valid:
+            form.save()
+            return redirect('user-profile', pk=user.id)
+    return render(request, 'base/update-user.html', {'form': form})
