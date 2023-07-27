@@ -76,6 +76,7 @@ def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all()
     participants = room.participants.all()
+    participants_count = participants.count()
     if request.method == 'POST':
         message = Message.objects.create(
             user=request.user,
@@ -84,31 +85,42 @@ def room(request, pk):
         )
         room.participants.add(request.user)
         return redirect('room', pk=room.id)
-    return render(request, 'base/room.html', {'room': room, 'room_messages': room_messages, 'participants':participants})
+    return render(request, 'base/room.html', {'room': room, 'room_messages': room_messages, 'participants':participants, 'participants_count':participants_count})
 
 
 @login_required(login_url='login')
 def createRoom(request):
     form = RoomForm()
+    topics = Topic.objects.all
     if request.method == 'POST':
-        form = RoomForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    return render(request, 'base/create-room.html', {'form': form})
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+        Room.objects.create(
+            host=request.user,
+            topic=topic,
+            name=request.POST.get('name'),
+            description=request.POST.get('description'),
+        )
+        return redirect('home')
+    return render(request, 'base/create-room.html', {'form': form, 'topics':topics})
 
 
 @login_required(login_url='login')
 def updateRoom(request, pk):
     room = get_object_or_404(Room, id=pk)
     form = RoomForm(instance=room)
+    topics = Topic.objects.all
     if request.user != room.host:
         return HttpResponse("You're not allowed here")
     if request.method == 'POST':
-        form = RoomForm(request.POST, instance=room)
-        form.save()
-        return redirect(home)
-    return render(request, 'base/create-room.html', {'form': form, 'room': room})
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+        room.name = request.POST.get('name')
+        room.topic = topic
+        room.description = request.POST.get('description')
+        room.save()
+        return redirect('home')
+    return render(request, 'base/create-room.html', {'form': form, 'room': room, 'topics':topics})
 
 
 @login_required(login_url='login')

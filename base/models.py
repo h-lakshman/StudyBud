@@ -18,7 +18,8 @@ class Room(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
-   
+    class Meta:
+        ordering = ['-created', 'updated']
 
     def __str__(self):
         return self.name
@@ -33,5 +34,6 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[:50]
+    
     class Meta:
         ordering = ['-created', 'updated']
