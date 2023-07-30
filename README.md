@@ -36,19 +36,17 @@ pip install -r requirements.txt
 ```bash
 python manage.py runserver
 ```
-###Then, the development server will be started at http://127.0.0.1:8000/
+--> Then, the development server will be started at http://127.0.0.1:8000/
 
-##App Preview
-## Image Grid Example
-
+<h3>App preview:</h3>
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
   <div>
-    <img src="[images/home.png](https://github.com/h-lakshman/StudyBud/blob/master/static/images/home.png)" alt="Image 1" width="300" height="200">
-    <h3>Home Feed</h3>
+   <h3>Home Feed</h3>
+    <img src="https://github.com/h-lakshman/StudyBud/blob/master/static/images/home.png" alt="" width="300" height="200">
   </div>
   <div>
+       <h3>Room Conversations</h3>
     <img src="https://github.com/h-lakshman/StudyBud/blob/master/static/images/room.png" alt="" width="300" height="200">
-    <h3>Room Conversations</h3>
   </div>
 </div>
 
