@@ -43,11 +43,11 @@ python manage.py runserver
 
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
   <div>
-    <img src="images/home.png" alt="Image 1" width="300" height="200">
+    <img src="[images/home.png](https://github.com/h-lakshman/StudyBud/blob/master/static/images/home.png)" alt="Image 1" width="300" height="200">
     <h3>Home Feed</h3>
   </div>
   <div>
-    <img src="images/room.png" alt="" width="300" height="200">
+    <img src="https://github.com/h-lakshman/StudyBud/blob/master/static/images/room.png" alt="" width="300" height="200">
     <h3>Room Conversations</h3>
   </div>
 </div>
